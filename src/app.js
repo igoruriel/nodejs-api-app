@@ -6,7 +6,7 @@ app.use(express.json());
 
 const livros = [
     {id: 1, 'titulo': 'Senhor dos Aneis'}, 
-    {id: 2, 'título': 'Hobiit'}
+    {id: 2, 'titulo': 'Hobiit'}
 ]
 
 app.get('/', (req, res)=>{
@@ -33,8 +33,15 @@ app.put('/livros/:id', (req, res)=>{
     res.status(200).json(livros);
 })
 
+app.delete('/livros/:id', (req, res)=>{
+    let {id} = req.params;
+    let index = buscaLivro(id);
+    livros.splice(index, 1);
+    res.status(200).send(`Livro ${id} removido com sucesso`);
+})
+
 function buscaLivro(id) {
-    return livros.findIndex(livro => livro.id === id)
+    return livros.findIndex(livro => livro.id == id)
 }
 
 export default app;
